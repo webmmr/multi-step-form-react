@@ -17,7 +17,20 @@ const initialData = {
   phone: "",
   billingMonthly: "",
   billingYearly: "",
-  addOn: "",
+  addOn: [
+    {
+      title: "Online services",
+      value: "",
+    },
+    {
+      title: "Larger storage",
+      value: "",
+    },
+    {
+      title: "Customizable profile",
+      value: "",
+    },
+  ],
   profileYearly: "",
 };
 
@@ -46,7 +59,7 @@ function App() {
       setYearlyBilling={setYearlyBilling}
     />,
     <Step3 {...data} updateData={updateData} toggle={toggle} />,
-    <Step4 {...data} updateData={updateData} />,
+    <Step4 data={data} />,
   ];
   const { curStep, step, isFirstStep, isLastStep, next, prev } =
     useMultiStep(steps);
@@ -54,12 +67,7 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
     // if (!isLastStep) return next();
-    console.log("clicked");
   }
-
-  console.log(toggle);
-
-  // console.log(data);
 
   return (
     <div className="bg-magnolia py-10 h-screen items-center flex">

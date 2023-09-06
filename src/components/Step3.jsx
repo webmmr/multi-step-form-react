@@ -2,7 +2,24 @@ import Header from "./shared/Header";
 import { useState } from "react";
 
 const StepThree = ({ toggle, addOn, updateData }) => {
-  console.log(toggle);
+  const [isChecked, setIsChecked] = useState(
+    new Array(addOn.length).fill(false)
+  );
+
+  function handleChange(pos, e) {
+    // updating the addOn array
+    const updatedAddOn = [...addOn];
+    updatedAddOn[pos].value = e.target.value;
+    updateData({ addOn: updatedAddOn });
+
+    // updating the checked status
+    const updatedChecked = isChecked.map((item, index) => {
+      return index === pos ? !item : item;
+    });
+
+    setIsChecked(updatedChecked);
+  }
+
   return (
     <>
       <Header
@@ -10,77 +27,69 @@ const StepThree = ({ toggle, addOn, updateData }) => {
         subtitle="Add-ons help enhance your gaming experience."
       />
       {/* Monthly Add-on Options */}
-      <div className=" flex flex-col  justify-between items-start">
-        <div className="flex flex-1 border border-1 border-coolGray rounded-lg p-5 mb-5 checkbox-wrapper">
-          <input
-            type="checkbox"
-            value={toggle ? 10 : 1}
-            id="onlineMonthly"
-            name="addOnMonthly"
-            className="add-on-checkbox"
-          />
-          <label htmlFor="onlineMonthly" className="w-full cursor-pointer">
-            <div className="flex justify-between items-center">
-              <span className="checkbox-button w-6 h-6 border border-1 border-coolGray rounded-md "></span>
-              <div className="flex-1 ml-8">
-                <h3 className="text-marinBlue text-xl font-bold">
-                  Online service
-                </h3>
-                <p className="text-coolGray">Access to multiplayer games</p>
-              </div>
-              <p className="text-purplishBlue">
-                {toggle ? "+$10/yr" : "+$1/mo"}
-              </p>
-            </div>
-          </label>
-        </div>
-        <div className="flex flex-1 border border-1 border-coolGray rounded-lg p-5 mb-5 checkbox-wrapper">
-          <input
-            type="checkbox"
-            value={toggle ? 20 : 2}
-            id="storageMonthly"
-            name="addOnMonthly"
-            className="add-on-checkbox"
-          />
-          <label htmlFor="storageMonthly" className="w-full cursor-pointer">
-            <div className="flex justify-between items-center">
-              <span className="checkbox-button w-6 h-6 border border-1 border-coolGray rounded-md "></span>
-              <div className="flex-1 ml-8">
-                <h3 className="text-marinBlue text-xl font-bold">
-                  Larger storage
-                </h3>
-                <p className="text-coolGray">Extra 1TB of cloud save</p>
-              </div>
-              <p className="text-purplishBlue">
-                {toggle ? "+$20/yr" : "+2/mo"}
-              </p>
-            </div>
-          </label>
-        </div>
-        <div className="flex flex-1 border border-1 border-coolGray rounded-lg p-5  checkbox-wrapper">
-          <input
-            type="checkbox"
-            value={toggle ? 20 : 2}
-            id="profileMonthly"
-            name="addOnMonthly"
-            className="add-on-checkbox"
-          />
-          <label htmlFor="profileMonthly" className="w-full cursor-pointer">
-            <div className="flex justify-between items-center">
-              <span className="checkbox-button w-6 h-6 border border-1 border-coolGray rounded-md "></span>
-              <div className="flex-1 ml-8">
-                <h3 className="text-marinBlue text-xl font-bold">
-                  Customizable Profile
-                </h3>
-                <p className="text-coolGray">Custom theme on your profile</p>
-              </div>
-              <p className="text-purplishBlue">
-                {toggle ? "+$20/yr" : "+2/mo"}
-              </p>
-            </div>
-          </label>
-        </div>
-      </div>
+      <ul className=" flex flex-col  justify-between items-start">
+        {addOn.map((item, index) => {
+          return (
+            <li
+              className="flex flex-1 border border-1 border-coolGray rounded-lg p-5 mb-5 checkbox-wrapper"
+              key={item.title}
+            >
+              <input
+                type="checkbox"
+                value={
+                  toggle && index === 0
+                    ? 10
+                    : toggle && index === 1
+                    ? 20
+                    : toggle && index === 2
+                    ? 20
+                    : !toggle && index === 0
+                    ? 1
+                    : !toggle && index === 1
+                    ? 2
+                    : !toggle && index === 2
+                    ? 2
+                    : ""
+                }
+                id={`addon[${index}]`}
+                name={item.title}
+                className="add-on-checkbox"
+                checked={isChecked[index]}
+                onChange={(e) => handleChange(index, e)}
+              />
+              <label
+                htmlFor={`addon[${index}]`}
+                className="w-full cursor-pointer"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="checkbox-button w-6 h-6 border border-1 border-coolGray rounded-md "></span>
+                  <div className="flex-1 ml-8">
+                    <h3 className="text-marinBlue text-xl font-bold">
+                      {item.title}
+                    </h3>
+                    <p className="text-coolGray">Access to multiplayer games</p>
+                  </div>
+                  <p className="text-purplishBlue">
+                    {toggle && index === 0
+                      ? "+$10/yr"
+                      : toggle && index === 1
+                      ? "+$20/yr"
+                      : toggle && index === 2
+                      ? "+$20/yr"
+                      : !toggle && index === 0
+                      ? "+$1/mo"
+                      : !toggle && index === 1
+                      ? "+$2/mo"
+                      : !toggle && index === 2
+                      ? "+$2/mo"
+                      : ""}
+                  </p>
+                </div>
+              </label>
+            </li>
+          );
+        })}
+      </ul>
       {/* Yearly Add-on Options */}
       {/* {!toggle && (
         <div className=" flex flex-col  justify-between items-start">

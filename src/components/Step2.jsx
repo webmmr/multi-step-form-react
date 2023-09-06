@@ -105,9 +105,9 @@ const StepTwo = ({
               type="radio"
               value="90"
               id="arcadeYearly"
-              name={billingYearly}
+              name={yearlyBilling}
               className="billing"
-              checked={billingYearly === "90"}
+              checked={yearlyBilling === "90"}
               onChange={() => handleChange("90")}
             />
             <label htmlFor="arcadeYearly">
