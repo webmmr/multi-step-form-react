@@ -1,6 +1,6 @@
 import Header from "./shared/Header";
 
-const StepOne = () => {
+const StepOne = ({ name, email, phone, updateData }) => {
   return (
     <>
       <Header
@@ -14,6 +14,9 @@ const StepOne = () => {
         </label>
         <input
           type="text"
+          id="name"
+          value={name}
+          onChange={(e) => updateData({ name: e.target.value })}
           placeholder="Md Mizanur Rahman"
           className="p-3 border border-1 rounded-lg border-coolGray"
         />
@@ -24,6 +27,9 @@ const StepOne = () => {
         </label>
         <input
           type="email"
+          id="email"
+          value={email}
+          onChange={(e) => updateData({ email: e.target.value })}
           placeholder="kodom@gmail.com"
           className="p-3 border border-1 rounded-lg border-coolGray"
         />
@@ -34,6 +40,9 @@ const StepOne = () => {
         </label>
         <input
           type="tel"
+          id="phone"
+          value={phone}
+          onChange={(e) => updateData({ phone: e.target.value })}
           placeholder="e. g. +1223456789"
           className="p-3 border border-1 rounded-lg border-coolGray"
         />

@@ -1,67 +1,78 @@
 import { useState } from "react";
+
+import Step1 from "./components/Step1";
+import Step2 from "./components/Step2";
+import Step3 from "./components/Step3";
+import Step4 from "./components/Step4";
+
+import AppLayout from "./components/AppLayout";
+import { useMultiStep } from "./components/hooks/useMultiStep";
 import Sidebar from "./components/Sidebar";
-import StepOne from "./components/StepOne";
-import StepTwo from "./components/StepTwo";
-import StepThree from "./components/StepThree";
-import StepFour from "./components/StepFour";
-import ThankYou from "./components/ThankYou";
+import Main from "./components/Main";
+import Button from "./components/shared/Button";
+
+const initialData = {
+  name: "",
+  email: "",
+  phone: "",
+  billingMonthly: "",
+  billingYearly: "",
+  addOn: "",
+  profileYearly: "",
+};
 
 function App() {
-  const [activeStep, setActiveStep] = useState(null);
+  const [toggle, setToggle] = useState(false);
+  const [data, setData] = useState(initialData);
+  const [monthlyBilling, setMonthlyBilling] = useState("");
+  const [yearlyBilling, setYearlyBilling] = useState("");
 
-  function nextStep() {
-    setActiveStep((prev) => prev + 1);
+  function updateData(fields) {
+    setData((prev) => {
+      return { ...prev, ...fields };
+    });
   }
-  function prevStep() {
-    setActiveStep((prev) => prev - 1);
+
+  const steps = [
+    <Step1 {...data} updateData={updateData} />,
+    <Step2
+      {...data}
+      updateData={updateData}
+      toggle={toggle}
+      setToggle={setToggle}
+      monthlyBilling={monthlyBilling}
+      setMonthlyBilling={setMonthlyBilling}
+      yearlyBilling={yearlyBilling}
+      setYearlyBilling={setYearlyBilling}
+    />,
+    <Step3 {...data} updateData={updateData} toggle={toggle} />,
+    <Step4 {...data} updateData={updateData} />,
+  ];
+  const { curStep, step, isFirstStep, isLastStep, next, prev } =
+    useMultiStep(steps);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // if (!isLastStep) return next();
+    console.log("clicked");
   }
+
+  console.log(toggle);
+
+  // console.log(data);
 
   return (
     <div className="bg-magnolia py-10 h-screen items-center flex">
       <section className="container mx-auto flex p-5 bg-white rounded-lg min-h-[80vh]">
-        {/* Sidebar / Topbar */}
-        {<Sidebar activeStep={activeStep} />}
-        {/* Main Area */}
-        <form className="flex-1 px-[120px] pt-12">
-          <div>
-            {activeStep === 0 ? (
-              <StepOne />
-            ) : activeStep === 1 ? (
-              <StepTwo />
-            ) : activeStep === 2 ? (
-              <StepThree />
-            ) : activeStep === 3 ? (
-              <StepFour />
-            ) : (
-              <ThankYou />
-            )}
-
-            {activeStep && (
-              <div
-                className={`flex ${
-                  activeStep !== 0 ? "justify-between" : "justify-end"
-                } items-center mt-[120px]`}
-              >
-                {activeStep !== 0 && (
-                  <button
-                    type="button"
-                    className="text-coolGray hover:text-marinBlue"
-                    onClick={prevStep}
-                  >
-                    Go back
-                  </button>
-                )}
-                <button
-                  type="button"
-                  className="bg-marinBlue hover:bg-purplishBlue text-white py-3 px-5 rounded-lg"
-                  onClick={nextStep}
-                >
-                  {activeStep !== 3 ? "Next Step" : "Confirm"}
-                </button>
-              </div>
-            )}
-          </div>
-        </form>
+        <Sidebar curStep={curStep} />
+        <Main
+          step={step}
+          isFirstStep={isFirstStep}
+          isLastStep={isLastStep}
+          next={next}
+          prev={prev}
+          onSubmit={handleSubmit}
+        />
       </section>
     </div>
   );
