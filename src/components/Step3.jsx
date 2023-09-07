@@ -21,24 +21,15 @@ const StepThree = ({
     });
 
     setIsChecked(updatedChecked);
+
+    // Update the selectedAddOn array based on the checked checkboxes
+    const updatedSelectedAddOn = addOn.filter(
+      (_, index) => updatedChecked[index]
+    );
+
+    // Update the selectedAddOn state
+    updateData({ selectedAddOn: updatedSelectedAddOn });
   }
-
-  // function handleChange(pos, e) {
-  //   console.log(pos, e.target.value);
-  //   // updating the addOn array
-  //   const updatedAddOn = [...selectedAddOn];
-
-  //   updatedAddOn[pos] = { ...updatedAddOn[pos], value: e.target.value };
-
-  //   updateData({ selectedAddOn: updatedAddOn });
-
-  //   // updating the checked status
-  //   const updatedChecked = isChecked.map((item, index) => {
-  //     return index === pos ? !item : item;
-  //   });
-
-  //   setIsChecked(updatedChecked);
-  // }
 
   return (
     <>
