@@ -1,8 +1,4 @@
 import Header from "./shared/Header";
-import arcade from "../assets/icon-arcade.svg";
-import advanced from "../assets/icon-advanced.svg";
-import pro from "../assets/icon-pro.svg";
-import { useState } from "react";
 
 const StepTwo = ({
   toggle,
@@ -10,23 +6,18 @@ const StepTwo = ({
   billingMonthly,
   billingYearly,
   updateData,
-  monthlyBilling,
-  setMonthlyBilling,
-  yearlyBilling,
-  setYearlyBilling,
+
+  selectedPlan,
 }) => {
-  const handleChange = (newValue) => {
-    if (!toggle) {
-      setMonthlyBilling(newValue);
-      updateData({ billingMonthly: newValue });
-    } else {
-      setMonthlyBilling("");
-      setYearlyBilling(newValue);
-      updateData({
-        billingMonthly: "",
-        billingYearly: newValue,
-      });
-    }
+  const handleChange = (e) => {
+    const filteredPlans = toggle ? billingYearly : billingMonthly;
+
+    let newSelectedPlan = {};
+
+    newSelectedPlan = filteredPlans.find(
+      (plan) => plan.value === e.target.value
+    );
+    updateData({ selectedPlan: newSelectedPlan });
   };
 
   return (
@@ -38,128 +29,72 @@ const StepTwo = ({
 
       {/* Monthly Billing Options */}
       {!toggle && (
-        <div className="radio flex justify-between items-start mb-5">
-          <div className="arcadeBox flex-1">
-            <input
-              type="radio"
-              value="9"
-              id="arcadeMonthly"
-              name={billingMonthly}
-              className="billing"
-              checked={monthlyBilling === "9"}
-              onChange={() => handleChange("9")}
-            />
-            <label htmlFor="arcadeMonthly" className="cursor-pointer">
-              <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mr-2 hover:pointer ">
-                <img src={arcade} alt="Arcade" className="w-min mb-16" />
-                <h2 className="text-marinBlue text-xl">Arcade</h2>
-                <p className="text-coolGray">$9/mo</p>
-              </div>
-            </label>
-          </div>
-
-          <div className="advancedBox flex-1">
-            <input
-              type="radio"
-              value="12"
-              id="advancedMonthly"
-              name={billingMonthly}
-              className="billing"
-              checked={monthlyBilling === "12"}
-              onChange={() => handleChange("12")}
-            />
-            <label htmlFor="advancedMonthly">
-              <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mx-2 hover:pointer ">
-                <img src={advanced} alt="Advanced" className="w-min mb-16" />
-                <h2 className="text-marinBlue text-xl">Advanced</h2>
-                <p className="text-coolGray">$12/mo</p>
-              </div>
-            </label>
-          </div>
-
-          <div className="proBox flex-1">
-            <input
-              type="radio"
-              value="15"
-              id="proMonthly"
-              name={billingMonthly}
-              className="billing"
-              checked={monthlyBilling === "15"}
-              onChange={() => handleChange("15")}
-            />
-            <label htmlFor="proMonthly" className="w-full">
-              <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 ml-2 hover:pointer ">
-                <img src={pro} alt="Pro" className="w-min mb-16" />
-                <h2 className="text-marinBlue text-xl">Pro</h2>
-                <p className="text-coolGray">$15/mo</p>
-              </div>
-            </label>
-          </div>
-        </div>
+        <ul className="radio flex justify-between items-start mb-5">
+          {billingMonthly.map((item) => {
+            return (
+              <li className="flex-1" key={item.title}>
+                <input
+                  type="radio"
+                  value={item.value}
+                  id={`${item.title}-Monthly`}
+                  name="billing"
+                  className="billing"
+                  checked={selectedPlan && selectedPlan.value === item.value}
+                  onChange={(e) => handleChange(e)}
+                />
+                <label
+                  htmlFor={`${item.title}-Monthly`}
+                  className="cursor-pointer"
+                >
+                  <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mr-2 hover:pointer ">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-min mb-16"
+                    />
+                    <h2 className="text-marinBlue text-xl">{item.title}</h2>
+                    <p className="text-coolGray">${item.value}/mo</p>
+                  </div>
+                </label>
+              </li>
+            );
+          })}
+        </ul>
       )}
       {/* Yearly Billing Options */}
       {toggle && (
-        <div className=" flex justify-between items-start mb-5">
-          <div className="arcadeBox flex-1">
-            <input
-              type="radio"
-              value="90"
-              id="arcadeYearly"
-              name={yearlyBilling}
-              className="billing"
-              checked={yearlyBilling === "90"}
-              onChange={() => handleChange("90")}
-            />
-            <label htmlFor="arcadeYearly">
-              <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mr-2 hover:pointer ">
-                <img src={arcade} alt="Arcade" className="w-min mb-16" />
-                <h2 className="text-marinBlue text-xl">Arcade</h2>
-                <p className="text-coolGray">$90/yr </p>
-                <p className="text-purplishBlue">2 months free</p>
-              </div>
-            </label>
-          </div>
-
-          <div className="advancedBox flex-1">
-            <input
-              type="radio"
-              value="120"
-              id="advancedYearly"
-              name={billingYearly}
-              className="billing"
-              checked={billingYearly === "120"}
-              onChange={() => handleChange("120")}
-            />
-            <label htmlFor="advancedYearly">
-              <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mx-2 hover:pointer ">
-                <img src={advanced} alt="Advanced" className="w-min mb-16" />
-                <h2 className="text-marinBlue text-xl">Advanced</h2>
-                <p className="text-coolGray">$120/yr</p>
-                <p className="text-purplishBlue">2 months free</p>
-              </div>
-            </label>
-          </div>
-
-          <div className="proBox flex-1">
-            <input
-              type="radio"
-              value="150"
-              id="proYearly"
-              name={billingYearly}
-              className="billing"
-              checked={billingYearly === "150"}
-              onChange={() => handleChange("150")}
-            />
-            <label htmlFor="proYearly" className="w-full">
-              <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 ml-2 hover:pointer ">
-                <img src={pro} alt="Pro" className="w-min mb-16" />
-                <h2 className="text-marinBlue text-xl">Pro</h2>
-                <p className="text-coolGray">$150/yr</p>
-                <p className="text-purplishBlue">2 months free</p>
-              </div>
-            </label>
-          </div>
-        </div>
+        <ul className="radio flex justify-between items-start mb-5">
+          {billingYearly.map((item) => {
+            return (
+              <li className="flex-1" key={item.title}>
+                <input
+                  type="radio"
+                  value={item.value}
+                  id={`${item.title}-Yearly`}
+                  name="billing"
+                  className="billing"
+                  checked={selectedPlan && selectedPlan.value === item.value}
+                  onChange={(e) => handleChange(e)}
+                />
+                <label
+                  htmlFor={`${item.title}-Yearly`}
+                  className="cursor-pointer"
+                >
+                  <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mr-2 hover:pointer ">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-min mb-16"
+                    />
+                    <h2 className="text-marinBlue text-xl">{item.title}</h2>
+                    <p className="text-coolGray">${item.value}/yr</p>
+                    <p className="text-purplishBlue">2 months free</p>
+                  </div>
+                </label>
+              </li>
+            );
+          })}
+        </ul>
       )}
 
       <div className="bg-magnolia rounded-lg flex justify-center p-4">

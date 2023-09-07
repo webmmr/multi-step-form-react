@@ -1,16 +1,25 @@
 import Header from "./shared/Header";
 import { useState } from "react";
 
-const StepThree = ({ toggle, addOn, updateData }) => {
+const StepThree = ({
+  toggle,
+  selectedAddOn,
+  addOnMonthly,
+  addOnYearly,
+  updateData,
+}) => {
+  const addOn = !toggle ? addOnMonthly : addOnYearly;
+  selectedAddOn = addOn.map((item) => ({ ...item, value: "" }));
+
   const [isChecked, setIsChecked] = useState(
     new Array(addOn.length).fill(false)
   );
 
   function handleChange(pos, e) {
     // updating the addOn array
-    const updatedAddOn = [...addOn];
+    const updatedAddOn = [...selectedAddOn];
     updatedAddOn[pos].value = e.target.value;
-    updateData({ addOn: updatedAddOn });
+    updateData({ selectedAddOn: updatedAddOn });
 
     // updating the checked status
     const updatedChecked = isChecked.map((item, index) => {

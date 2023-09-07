@@ -11,34 +11,83 @@ import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
 import Button from "./components/shared/Button";
 
+import arcade from "./assets/icon-arcade.svg";
+import advanced from "./assets/icon-advanced.svg";
+import pro from "./assets/icon-pro.svg";
+
 const initialData = {
   name: "",
   email: "",
   phone: "",
-  billingMonthly: "",
-  billingYearly: "",
-  addOn: [
+  billingMonthly: [
+    {
+      image: arcade,
+      title: "Arcade",
+      value: "9",
+    },
+    {
+      image: advanced,
+      title: "Advanced",
+      value: "12",
+    },
+    {
+      image: pro,
+      title: "Pro",
+      value: "15",
+    },
+  ],
+  billingYearly: [
+    {
+      image: arcade,
+      title: "Arcade",
+      value: "90",
+    },
+    {
+      image: advanced,
+      title: "Advanced",
+      value: "120",
+    },
+    {
+      image: pro,
+      title: "Pro",
+      value: "150",
+    },
+  ],
+  addOnMonthly: [
     {
       title: "Online services",
-      value: "",
+      value: "1",
     },
     {
       title: "Larger storage",
-      value: "",
+      value: "2",
     },
     {
       title: "Customizable profile",
-      value: "",
+      value: "2",
     },
   ],
-  profileYearly: "",
+  addOnYearly: [
+    {
+      title: "Online services",
+      value: "10",
+    },
+    {
+      title: "Larger storage",
+      value: "20",
+    },
+    {
+      title: "Customizable profile",
+      value: "20",
+    },
+  ],
+  selectedPlan: {},
+  selectedAddOn: {},
 };
 
 function App() {
   const [toggle, setToggle] = useState(false);
   const [data, setData] = useState(initialData);
-  const [monthlyBilling, setMonthlyBilling] = useState("");
-  const [yearlyBilling, setYearlyBilling] = useState("");
 
   function updateData(fields) {
     setData((prev) => {
@@ -53,13 +102,9 @@ function App() {
       updateData={updateData}
       toggle={toggle}
       setToggle={setToggle}
-      monthlyBilling={monthlyBilling}
-      setMonthlyBilling={setMonthlyBilling}
-      yearlyBilling={yearlyBilling}
-      setYearlyBilling={setYearlyBilling}
     />,
     <Step3 {...data} updateData={updateData} toggle={toggle} />,
-    <Step4 data={data} />,
+    <Step4 {...data} />,
   ];
   const { curStep, step, isFirstStep, isLastStep, next, prev } =
     useMultiStep(steps);
@@ -67,6 +112,8 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
     // if (!isLastStep) return next();
+
+    console.log(data);
   }
 
   return (
