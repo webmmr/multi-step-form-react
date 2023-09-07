@@ -1,8 +1,6 @@
 import Header from "./shared/Header";
 
 function StepFour({ selectedPlan, selectedAddOn }) {
-  console.log(selectedAddOn);
-
   const title =
     selectedPlan.value === "9"
       ? "Arcade (Monthly)"
@@ -44,10 +42,16 @@ function StepFour({ selectedPlan, selectedAddOn }) {
         </div>
         <ul>
           {selectedAddOn.map((addOn) => {
-            <li className="flex justify-between items-center">
-              <p>{addOn.title}</p>
-              <p>${addOn.value < 90 ? "/mo" : "/yr"}</p>
-            </li>;
+            if (addOn.value)
+              return (
+                <li className="flex justify-between items-center">
+                  <p>{addOn.title}</p>
+                  <p>
+                    ${addOn.value}
+                    {addOn.value < 90 ? "/mo" : "/yr"}
+                  </p>
+                </li>
+              );
           })}
         </ul>
       </div>

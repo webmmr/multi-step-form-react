@@ -9,25 +9,36 @@ const StepThree = ({
   updateData,
 }) => {
   const addOn = !toggle ? addOnMonthly : addOnYearly;
-  selectedAddOn = addOn.map((item) => ({ ...item, value: "" }));
 
   const [isChecked, setIsChecked] = useState(
     new Array(addOn.length).fill(false)
   );
 
   function handleChange(pos, e) {
-    // updating the addOn array
-    const updatedAddOn = [...selectedAddOn];
-    updatedAddOn[pos].value = e.target.value;
-    updateData({ selectedAddOn: updatedAddOn });
-
-    // updating the checked status
+    // Toggle the checked status
     const updatedChecked = isChecked.map((item, index) => {
       return index === pos ? !item : item;
     });
 
     setIsChecked(updatedChecked);
   }
+
+  // function handleChange(pos, e) {
+  //   console.log(pos, e.target.value);
+  //   // updating the addOn array
+  //   const updatedAddOn = [...selectedAddOn];
+
+  //   updatedAddOn[pos] = { ...updatedAddOn[pos], value: e.target.value };
+
+  //   updateData({ selectedAddOn: updatedAddOn });
+
+  //   // updating the checked status
+  //   const updatedChecked = isChecked.map((item, index) => {
+  //     return index === pos ? !item : item;
+  //   });
+
+  //   setIsChecked(updatedChecked);
+  // }
 
   return (
     <>

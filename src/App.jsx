@@ -82,7 +82,7 @@ const initialData = {
     },
   ],
   selectedPlan: {},
-  selectedAddOn: {},
+  selectedAddOn: [],
 };
 
 function App() {
