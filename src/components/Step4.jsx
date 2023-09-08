@@ -16,6 +16,10 @@ function StepFour({ selectedPlan, selectedAddOn }) {
       ? "Advanced(Yearly)"
       : "";
 
+  const total =
+    Number(selectedPlan.value) +
+    selectedAddOn.reduce((acc, cur) => Number(cur.value), 0);
+
   return (
     <>
       <Header
@@ -40,20 +44,32 @@ function StepFour({ selectedPlan, selectedAddOn }) {
             {selectedPlan.value < 90 ? "/mo" : "/yr"}
           </p>
         </div>
-        <ul>
+        <ul className="mt-5">
           {selectedAddOn.map((addOn) => {
             if (addOn.value)
               return (
-                <li className="flex justify-between items-center">
-                  <p>{addOn.title}</p>
-                  <p>
-                    ${addOn.value}
-                    {addOn.value < 90 ? "/mo" : "/yr"}
+                <li
+                  className="flex justify-between items-center py-2"
+                  key={addOn.title}
+                >
+                  <p className="text-coolGray">{addOn.title}</p>
+                  <p className="text-marinBlue font-semibold">
+                    +${addOn.value}
+                    {selectedPlan.value < 90 ? "/mo" : "/yr"}
                   </p>
                 </li>
               );
           })}
         </ul>
+      </div>
+      <div className="flex items-center justify-between p-6">
+        <p className="text-coolGray">
+          Total {selectedPlan.value < 90 ? "(per month)" : "(per year)"}
+        </p>
+        <p className="text-marinBlue font-bold text-2xl">
+          +${total}
+          {total < 90 ? "/mo" : "/yr"}
+        </p>
       </div>
     </>
   );

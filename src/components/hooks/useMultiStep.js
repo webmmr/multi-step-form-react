@@ -21,5 +21,5 @@ export function useMultiStep(steps) {
       return prev - 1;
     });
   }
-  return { curStep, step, isFirstStep, isLastStep, next, prev };
+  return { curStep, step, isFirstStep, isLastStep, next, prev, setCurStep };
 }

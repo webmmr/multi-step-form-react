@@ -4,12 +4,11 @@ import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
 import Step4 from "./components/Step4";
+import ThankYou from "./components/ThankYou";
 
-import AppLayout from "./components/AppLayout";
 import { useMultiStep } from "./components/hooks/useMultiStep";
 import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
-import Button from "./components/shared/Button";
 
 import arcade from "./assets/icon-arcade.svg";
 import advanced from "./assets/icon-advanced.svg";
@@ -88,6 +87,7 @@ const initialData = {
 function App() {
   const [toggle, setToggle] = useState(false);
   const [data, setData] = useState(initialData);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   function updateData(fields) {
     setData((prev) => {
@@ -106,28 +106,34 @@ function App() {
     <Step3 {...data} updateData={updateData} toggle={toggle} />,
     <Step4 {...data} />,
   ];
-  const { curStep, step, isFirstStep, isLastStep, next, prev } =
+  const { curStep, step, isFirstStep, isLastStep, next, prev, setCurStep } =
     useMultiStep(steps);
 
   function handleSubmit(e) {
     e.preventDefault();
-    // if (!isLastStep) return next();
 
-    console.log(data);
+    if (!isLastStep) return next();
+    else {
+      setIsSubmitted(true);
+    }
   }
 
   return (
     <div className="bg-magnolia py-10 h-screen items-center flex">
       <section className="container mx-auto flex p-5 bg-white rounded-lg min-h-[80vh]">
-        <Sidebar curStep={curStep} />
-        <Main
-          step={step}
-          isFirstStep={isFirstStep}
-          isLastStep={isLastStep}
-          next={next}
-          prev={prev}
-          onSubmit={handleSubmit}
-        />
+        <Sidebar curStep={curStep} steps={steps} />
+        {isSubmitted ? (
+          <ThankYou />
+        ) : (
+          <Main
+            step={step}
+            isFirstStep={isFirstStep}
+            isLastStep={isLastStep}
+            next={next}
+            prev={prev}
+            onSubmit={handleSubmit}
+          />
+        )}
       </section>
     </div>
   );

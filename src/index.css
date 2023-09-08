@@ -16,9 +16,9 @@ body {
 }
 
 /* Toggle B */
-input:checked ~ .dot {
+/* input:checked ~ .dot {
   transform: translateX(140%);
-}
+} */
 
 input[type="radio"],
 input[type="checkbox"] {
@@ -53,8 +53,4 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked + label .checkbox-button::before {
   opacity: 1;
-}
-
-input[type="radio"]:checked + label div {
-  border: 1px solid red;
 }

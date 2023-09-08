@@ -9,9 +9,9 @@ const StepTwo = ({
 
   selectedPlan,
 }) => {
-  const handleChange = (e) => {
-    const filteredPlans = toggle ? billingYearly : billingMonthly;
+  const filteredPlans = toggle ? billingYearly : billingMonthly;
 
+  const handleChange = (e) => {
     let newSelectedPlan = {};
 
     newSelectedPlan = filteredPlans.find(
@@ -39,14 +39,20 @@ const StepTwo = ({
                   id={`${item.title}-Monthly`}
                   name="billing"
                   className="billing"
-                  checked={selectedPlan && selectedPlan.value === item.value}
+                  checked={selectedPlan?.value === item.value}
                   onChange={(e) => handleChange(e)}
                 />
                 <label
                   htmlFor={`${item.title}-Monthly`}
-                  className="cursor-pointer"
+                  className="cursor-pointer checked:border-marinBlue "
                 >
-                  <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mr-2 hover:pointer ">
+                  <div
+                    className={`flex flex-col p-4 rounded-lg  border-2  flex-1 mr-2  ${
+                      selectedPlan?.value === item.value
+                        ? "border-marinBlue bg-alabaster"
+                        : "border-lightGray bg-white"
+                    } `}
+                  >
                     <img
                       src={item.image}
                       alt={item.title}
@@ -73,14 +79,20 @@ const StepTwo = ({
                   id={`${item.title}-Yearly`}
                   name="billing"
                   className="billing"
-                  checked={selectedPlan && selectedPlan.value === item.value}
+                  checked={selectedPlan?.value === item.value}
                   onChange={(e) => handleChange(e)}
                 />
                 <label
                   htmlFor={`${item.title}-Yearly`}
                   className="cursor-pointer"
                 >
-                  <div className="flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mr-2 hover:pointer ">
+                  <div
+                    className={`flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mr-2 hover:pointer ${
+                      selectedPlan?.value === item.value
+                        ? "border-marinBlue"
+                        : ""
+                    } `}
+                  >
                     <img
                       src={item.image}
                       alt={item.title}
@@ -109,14 +121,14 @@ const StepTwo = ({
                 type="checkbox"
                 id="toggleB"
                 className="sr-only"
-                onChange={() => setToggle(!toggle)}
+                onChange={() => setToggle((toggle) => !toggle)}
               />
 
               <div className="block bg-marinBlue w-12 h-6 rounded-full"></div>
 
               <div
                 className={`dot absolute top-1  bg-white w-4 h-4 rounded-full transition ${
-                  !toggle ? "left-1 " : "right-7 "
+                  !toggle ? "translate-x-1 " : "translate-x-7"
                 }`}
               ></div>
             </div>

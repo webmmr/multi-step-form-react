@@ -8,7 +8,7 @@ const StepOne = ({ name, email, phone, updateData }) => {
         subtitle="Please provide name, email address, and phone number."
       />
 
-      <div className="mb-2 flex flex-col">
+      <div className="mb-2 flex flex-col ">
         <label htmlFor="name" className="text-marinBlue mb-1">
           Name
         </label>
