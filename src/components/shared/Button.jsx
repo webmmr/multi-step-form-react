@@ -1,5 +1,3 @@
-import { useMultiStep } from "../hooks/useMultiStep";
-
 function Button({ isFirstStep, isLastStep, next, prev }) {
   return (
     <div className="flex justify-between items-center mt-20">
