@@ -29,10 +29,13 @@ const StepTwo = ({
 
       {/* Monthly Billing Options */}
       {!toggle && (
-        <ul className="radio flex justify-between items-start mb-5">
+        <ul className="radio flex md:flex-row flex-col  justify-between items-start mb-5">
           {billingMonthly.map((item) => {
             return (
-              <li className="flex-1" key={item.title}>
+              <li
+                className="flex-1 md:w-auto md:my-0 my-2 w-full"
+                key={item.title}
+              >
                 <input
                   type="radio"
                   value={item.value}
@@ -69,10 +72,13 @@ const StepTwo = ({
       )}
       {/* Yearly Billing Options */}
       {toggle && (
-        <ul className="radio flex justify-between items-start mb-5">
+        <ul className="radio flex md:flex-row flex-col  justify-between items-start mb-5">
           {billingYearly.map((item) => {
             return (
-              <li className="flex-1" key={item.title}>
+              <li
+                className="flex-1 md:w-auto md:my-0 my-2 w-full"
+                key={item.title}
+              >
                 <input
                   type="radio"
                   value={item.value}

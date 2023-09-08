@@ -18,7 +18,7 @@ function StepFour({ selectedPlan, selectedAddOn }) {
 
   const total =
     Number(selectedPlan.value) +
-    selectedAddOn.reduce((acc, cur) => Number(cur.value), 0);
+    selectedAddOn.reduce((acc, cur) => acc + Number(cur.value), 0);
 
   return (
     <>

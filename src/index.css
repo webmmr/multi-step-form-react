@@ -9,11 +9,11 @@ body {
   font-family: "Ubuntu", sans-serif;
 }
 
-.sidebar {
+/* .sidebar {
   background-image: url(../src/assets/bg-sidebar-desktop.svg);
   background-size: cover;
   background-position: center bottom;
-}
+} */
 
 /* Toggle B */
 /* input:checked ~ .dot {

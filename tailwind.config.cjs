@@ -13,6 +13,17 @@ module.exports = {
       alabaster: "hsl(231,100%,99%)",
       white: "hsl(0,0%,100%)",
     },
+    backgroundImage: {
+      desktop: "url(../assets/bg-sidebar-desktop.svg)  ",
+      mobile: "url(../assets/bg-sidebar-mobile.svg) ",
+    },
+    backgroundSize: {
+      cover: "cover",
+    },
+    backgroundPosition: {
+      position: "center bottom",
+    },
   },
+
   plugins: [],
 };
