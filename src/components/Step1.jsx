@@ -17,6 +17,7 @@ const StepOne = ({ name, email, phone, updateData }) => {
           id="name"
           value={name}
           onChange={(e) => updateData({ name: e.target.value })}
+          required
           placeholder="Md Mizanur Rahman"
           className="p-3 border border-1 rounded-lg border-coolGray"
         />
@@ -30,6 +31,7 @@ const StepOne = ({ name, email, phone, updateData }) => {
           id="email"
           value={email}
           onChange={(e) => updateData({ email: e.target.value })}
+          required
           placeholder="kodom@gmail.com"
           className="p-3 border border-1 rounded-lg border-coolGray"
         />
@@ -43,6 +45,7 @@ const StepOne = ({ name, email, phone, updateData }) => {
           id="phone"
           value={phone}
           onChange={(e) => updateData({ phone: e.target.value })}
+          required
           placeholder="e. g. +1223456789"
           className="p-3 border border-1 rounded-lg border-coolGray"
         />

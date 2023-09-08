@@ -1,33 +1,41 @@
 import Header from "./shared/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const StepThree = ({
   toggle,
-  selectedAddOn,
+
   addOnMonthly,
   addOnYearly,
   updateData,
 }) => {
   const addOn = !toggle ? addOnMonthly : addOnYearly;
 
-  const [isChecked, setIsChecked] = useState(
-    new Array(addOn.length).fill(false)
-  );
+  const [isChecked, setIsChecked] = useState(() => {
+    const storedChecked = localStorage.getItem("isChecked");
+    return storedChecked
+      ? JSON.parse(storedChecked)
+      : new Array(addOn.length).fill(false);
+  });
+
+  useEffect(() => {
+    localStorage.setItem("isChecked", JSON.stringify(isChecked));
+
+    return function () {
+      localStorage.removeItem("isChecked");
+    };
+  }, [isChecked]);
 
   function handleChange(pos, e) {
-    // Toggle the checked status
     const updatedChecked = isChecked.map((item, index) => {
       return index === pos ? !item : item;
     });
 
     setIsChecked(updatedChecked);
 
-    // Update the selectedAddOn array based on the checked checkboxes
     const updatedSelectedAddOn = addOn.filter(
       (_, index) => updatedChecked[index]
     );
 
-    // Update the selectedAddOn state
     updateData({ selectedAddOn: updatedSelectedAddOn });
   }
 

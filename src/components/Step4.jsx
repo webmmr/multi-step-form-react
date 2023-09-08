@@ -1,6 +1,8 @@
+import { useGlobalContext } from "../context/GlobalContext";
 import Header from "./shared/Header";
 
 function StepFour({ selectedPlan, selectedAddOn }) {
+  const { setCurStep } = useGlobalContext();
   const title =
     selectedPlan.value === "9"
       ? "Arcade (Monthly)"
@@ -34,6 +36,7 @@ function StepFour({ selectedPlan, selectedAddOn }) {
             <a
               href="#"
               className="underline text-purplishBlue hover:text-marinBlue"
+              onClick={() => setCurStep(1)}
             >
               Change
             </a>

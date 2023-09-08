@@ -42,6 +42,7 @@ const StepTwo = ({
                   id={`${item.title}-Monthly`}
                   name="billing"
                   className="billing"
+                  required
                   checked={selectedPlan?.value === item.value}
                   onChange={(e) => handleChange(e)}
                 />
@@ -85,18 +86,19 @@ const StepTwo = ({
                   id={`${item.title}-Yearly`}
                   name="billing"
                   className="billing"
+                  required
                   checked={selectedPlan?.value === item.value}
                   onChange={(e) => handleChange(e)}
                 />
                 <label
                   htmlFor={`${item.title}-Yearly`}
-                  className="cursor-pointer"
+                  className="cursor-pointer checked:border-marinBlue "
                 >
                   <div
-                    className={`flex flex-col p-4 rounded-lg border border-1 border-lightGray flex-1 mr-2 hover:pointer ${
+                    className={`flex flex-col p-4 rounded-lg border border-1 flex-1 mr-2 hover:pointer ${
                       selectedPlan?.value === item.value
                         ? "border-marinBlue"
-                        : ""
+                        : "border-lightGray bg-white"
                     } `}
                   >
                     <img
