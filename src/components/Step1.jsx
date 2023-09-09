@@ -18,7 +18,7 @@ const StepOne = ({ name, email, phone, updateData }) => {
           value={name}
           onChange={(e) => updateData({ name: e.target.value })}
           required
-          placeholder="Md Mizanur Rahman"
+          placeholder="e.g. Alexei Mendel"
           className="p-3 border border-1 rounded-lg border-coolGray"
         />
       </div>
@@ -32,7 +32,7 @@ const StepOne = ({ name, email, phone, updateData }) => {
           value={email}
           onChange={(e) => updateData({ email: e.target.value })}
           required
-          placeholder="kodom@gmail.com"
+          placeholder="e.g. test@test.com"
           className="p-3 border border-1 rounded-lg border-coolGray"
         />
       </div>
